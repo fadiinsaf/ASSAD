@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users(
 	firstlogin BOOL DEFAULT TRUE,
 	is_active BOOL DEFAULT FALSE,
 	is_approved BOOL DEFAULT FALSE,
+	remeber_token VARCHAR(255),
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -130,7 +131,7 @@ VALUES
 (2, 4, 1),
 (3, 5, 2);
 
-CREATE TABLE IF NOT EXISTS comment(
+CREATE TABLE IF NOT EXISTS comments(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     comment_text TEXT,
     comment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -141,7 +142,7 @@ CREATE TABLE IF NOT EXISTS comment(
 	FOREIGN KEY (id_visiter) REFERENCES users(id) ON DELETE CASCADE
 );
 
-INSERT INTO comment (comment_text, rating, id_visiter, id_visit)
+INSERT INTO comments (comment_text, rating, id_visiter, id_visit)
 VALUES
 ('Amazing experience, very informative guide!', 5, 4, 1),
 ('Great visit, my kids loved it!', 4, 5, 2);

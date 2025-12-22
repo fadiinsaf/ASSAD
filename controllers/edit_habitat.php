@@ -1,16 +1,17 @@
 <?php
-    include_once __DIR__ . "/../database/database.php";
+    require_once __DIR__ . "/../database/database.php";
 
     if(isset($_GET["id"])){
-        $IDHAB = (int) $_GET["id"];
+        $id = (int) $_GET["id"];
 
-        $stmt = $db->prepare("SELECT * FROM habitats WHERE IDHAB = ?");
-        $stmt->execute([$IDHAB]);
+        $stmt = $db->prepare("SELECT * FROM habitats WHERE id = ?");
+        $stmt->execute([$id]);
 
         $habtiat = $stmt->fetch();
+
     }
     else{
-        header("Location: /index.php");
+    header("Location: /../src/admin_dashboard.php");
     }
 ?>
 
@@ -37,11 +38,7 @@
     <div class="d-flex">
         <!-- Sidebar -->
         <div class="sidebar p-3">
-            <h2>Zoo Admin</h2>
-            <a href="#dashboard">Dashboard</a>
-            <a href="#animals">Animals</a>
-            <a href="#add-animal">Add Animal</a>
-            <a href="#habitats">Habitats</a>
+            <h2>ASSAD ADMIN</h2>
         </div>
 
         <!-- Main Content -->
@@ -53,16 +50,21 @@
                     <div class="card-body">
                         <form action="update_habitat.php" method="post">
 
-                            <input type="hidden" name="IDHAB" value="<?= $IDHAB?>">
+                            <input type="hidden" name="id" value="<?= $id?>">
 
                             <div class="mb-3">
                                 <label class="form-label">Habitat Name</label>
-                                <input type="text" name="NOMHAB" value="<?= $habtiat["NOMHAB"] ?>" class="form-control">
+                                <input type="text" name="name" value="<?= $habtiat["name"] ?>" class="form-control">
                             </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Zoo Zone</label>
+                                    <input type="text" name="zoo_zone" value="<?= $habtiat["zoo_zone"] ?>" class="form-control">
+                                </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Habitat Description</label>
-                                <input type="text" name="Description_hab" value="<?= $habtiat["Description_hab"] ?>" class="form-control">
+                                <input type="text" name="description" value="<?= $habtiat["description"] ?>" class="form-control">
                             </div>
 
 

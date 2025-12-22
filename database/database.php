@@ -1,5 +1,5 @@
 <?php 
-$db_name = "zoo_dt";
+$db_name = "ASSAD";
 $host = "127.0.0.1";
 $user = "fadi";
 $pass = "fadiinsaf";

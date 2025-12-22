@@ -1,15 +1,16 @@
 <?php 
-include_once __DIR__ . "/../database/database.php";
+require_once __DIR__ . "/../database/database.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $NOMHAB = $_POST["NOMHAB"];
-    $Description_hab = $_POST["Description_hab"];
+    $name = $_POST["name"];
+    $description = $_POST["description"];
+    $zoo_zone = $_POST["zoo_zone"];
 
-    $stmt = $db->prepare("INSERT INTO habitats(NOMHAB,Description_hab) VALUES (?,?)");
-    $status = $stmt->execute([$NOMHAB, $Description_hab]);
+    $stmt = $db->prepare("INSERT INTO habitats(name,description,zoo_zone) VALUES (?,?,?)");
+    $status = $stmt->execute([$name, $description, $zoo_zone]);
 
     if($status){
-        header("Location: /index.php");
+        header("Location: /../src/admin_dashboard.php");
         exit();
     }
 
@@ -17,5 +18,5 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     die();
 }
 
-header("Location: /index.php");
+header("Location: /../src/admin_dashboard.php");
 exit();

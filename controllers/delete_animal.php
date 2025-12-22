@@ -1,22 +1,22 @@
 <?php
 
-include_once __DIR__ . "/../database/database.php";
+require_once __DIR__ . "/../database/database.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $id = $_POST["IDanimal"];
+    $id = $_POST["id"];
 
-    $stmt = $db->prepare("SELECT IMAGE FROM animals WHERE IDanimal = ?");
+    $stmt = $db->prepare("SELECT IMAGE FROM animals WHERE id = ?");
     $stmt->execute([$id]);
 
     $image = $stmt->fetchColumn();
 
     unlink(__DIR__ . "/../assets/$image");
 
-    $stmt = $db->prepare("DELETE FROM animals WHERE IDanimal = ?");
+    $stmt = $db->prepare("DELETE FROM animals WHERE id = ?");
     $status = $stmt->execute([$id]);
 
     if($status){
-        header("Location: /index.php");
+        header("Location: /../src/admin_dashboard.php");
         exit();
     }
 
@@ -24,5 +24,5 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     die();
 }
 
-header("Location: /index.php");
+header("Location: /../src/admin_dashboard.php");
 exit();

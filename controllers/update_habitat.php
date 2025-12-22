@@ -1,16 +1,17 @@
 <?php 
-include_once __DIR__ . "/../database/database.php";
+require_once __DIR__ . "/../database/database.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $id = $_POST["IDHAB"];
-    $NOMHAB = $_POST["NOMHAB"];
-    $Description_hab = $_POST["Description_hab"];
+    $id = $_POST["id"];
+    $name = $_POST["name"];
+    $zoo_zone = $_POST["zoo_zone"];
+    $description = $_POST["description"];
     
-    $stmt = $db->prepare("UPDATE habitats SET NOMHAB = ?, Description_hab = ? WHERE IDHAB = ?");
-    $status = $stmt->execute([$NOMHAB , $Description_hab, $id]);
+    $stmt = $db->prepare("UPDATE habitats SET name = ?, description = ?, zoo_zone = ? WHERE id = ?");
+    $status = $stmt->execute([$name , $description, $zoo_zone, $id]);
 
     if($status){
-        header("Location: /index.php");
+        header("Location: /../src/admin_dashboard.php");
         exit();
     }
 
@@ -18,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     die();
 }
 
-header("Location: /index.php");
-exit();
+        header("Location: /../src/admin_dashboard.php");
 
+exit();
 ?>
