@@ -1,11 +1,11 @@
 <?php
-    include_once __DIR__ . "/../database/database.php";
+    require_once __DIR__ . "/../database/database.php";
 
     if(isset($_GET["id"])){
-        $IDanimal = (int) $_GET["id"];
+        $id = (int) $_GET["id"];
 
-        $stmt = $db->prepare("SELECT * FROM animals WHERE IDanimal = ?");
-        $stmt->execute([$IDanimal]);
+        $stmt = $db->prepare("SELECT * FROM animals WHERE id = ?");
+        $stmt->execute([$id]);
 
         $animal = $stmt->fetch();
 
@@ -13,7 +13,7 @@
         $habitats = $stmt->fetchAll();
     }
     else{
-        header("Location: /index.php");
+    header("Location: /../src/admin_dashboard.php");
     }
 ?>
 
@@ -40,11 +40,7 @@
     <div class="d-flex">
         <!-- Sidebar -->
         <div class="sidebar p-3">
-            <h2>Zoo Admin</h2>
-            <a href="#dashboard">Dashboard</a>
-            <a href="#animals">Animals</a>
-            <a href="#add-animal">Add Animal</a>
-            <a href="#habitats">Habitats</a>
+            <h2>ASSAD ADMIN</h2>
         </div>
 
         <!-- Main Content -->
@@ -54,36 +50,44 @@
                     <div class="card-header"><i class="fas fa-plus me-1"></i> Update Animal</div>
                     <div class="card-body">
                         <form action="update_animal.php" enctype="multipart/form-data" method="post">
-                            <input type="hidden" name="IDanimal" value="<?= $IDanimal ?>">
+                            <input type="hidden" name="id" value="<?= $id ?>">
                             <div class="mb-3">
                                 <label class="form-label">Animal Name</label>
-                                <input type="text" name="NOM" value="<?= $animal["NOM"] ?>" class="form-control" placeholder="e.g. Lion">
+                                <input type="text" name="name" value="<?= $animal["name"] ?>" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Animal Species</label>
+                                <input type="text" name="species" value="<?= $animal["species"] ?>" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Type</label>
-                                <select class="form-select" name="Type_alimentaire">
-                                    <option <?= $animal["Type_alimentaire"] === "Carnivore" ? "selected" : null ?>>Carnivore</option>
-                                    <option <?= $animal["Type_alimentaire"] === "Herbivore" ? "selected" : null ?>>Herbivore</option>
-                                    <option <?= $animal["Type_alimentaire"] === "Omnivore" ? "selected" : null ?>>Omnivore</option>
+                                <select class="form-select" name="diet_type">
+                                    <option <?= $animal["diet_type"] === "CARNIVORE" ? "selected" : null ?>>CARNIVORE</option>
+                                    <option <?= $animal["diet_type"] === "HERBIVORE" ? "selected" : null ?>>HERBIVORE</option>
+                                    <option <?= $animal["diet_type"] === "OMNIVORE" ? "selected" : null ?>>OMNIVORE</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Habitat</label>
-                                <select class="form-select" name="IDHAB" >
+                                <select class="form-select" name="id_habitat" >
                                     <?php
                                         foreach($habitats as $habitat){
-                                            echo $animal["IDHAB"] === $habitat['IDHAB'] ? "
-                                                <option selected value='{$habitat['IDHAB']}'>{$habitat['NOMHAB']}</option>
+                                            echo $animal["id_habitat"] === $habitat['id'] ? "
+                                                <option selected value='{$habitat['id']}'>{$habitat['name']}</option>
                                             " : "
-                                                <option value='{$habitat['IDHAB']}'>{$habitat['NOMHAB']}</option>
+                                                <option value='{$habitat['id']}'>{$habitat['name']}</option>
                                             ";
                                         }
                                     ?>
                                 </select>
                             </div>
                             <div class="mb-3">
+                                <label class="form-label">Short Description</label>
+                                <input type="text" name="short_description" value="<?= $animal["short_description"] ?>" class="form-control">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">Image</label>
-                                <input type="file" class="form-control" name="IMAGE">
+                                <input type="file" class="form-control" name="image">
                             </div>
                             <button type="submit" class="btn btn-success">Update Animal</button>
                         </form>
