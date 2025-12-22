@@ -1,20 +1,19 @@
 <?php 
-include_once __DIR__ . "/../database/database.php";
+require_once __DIR__ . "/../database/database.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $id = $_POST["IDHAB"];
+    $id = $_POST["id"];
 
-    $stmt = $db->prepare("DELETE FROM habitats WHERE IDHAB = ?");
+    $stmt = $db->prepare("DELETE FROM habitats WHERE id = ?");
     $status = $stmt->execute([$id]);
 
     if($status){
-        header("Location: /index.php");
+        header("Location: /../src/admin_dashboard.php");
         exit();
     }
 
     echo "Error";
     die();
 }
-
-header("Locaation: /index.php");
+header("Location: /../src/admin_dashboard.php");
 exit();
